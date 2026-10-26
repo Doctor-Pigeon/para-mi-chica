@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Una pregunta para ti ❤️</title>
+
+  <style>
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 0;
+
+      padding: 0;
+
+    }
+
+    body {
+
+      min-height: 100vh;
+
+      min-height: 100dvh;
+
+      font-family: 'Segoe UI', Arial, sans-serif;
+
+      background: linear-gradient(135deg, #ffb6c9, #ffcce0, #f8a5c2);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      overflow-x: hidden;
+
+      padding: 20px;
+
+      color: #702743;
+
+    }
+
+    .card {
+
+      background: rgba(255, 255, 255, 0.94);
+
+      width: 100%;
+
+      max-width: 460px;
+
+      padding: 38px 24px;
+
+      border-radius: 28px;
+
+      text-align: center;
+
+      box-shadow: 0 15px 45px rgba(145, 35, 75, 0.18);
+
+      position: relative;
+
+      z-index: 2;
+
+      animation: aparecer 0.7s ease;
+
+    }
+
+    .heart {
+
+      font-size: 65px;
+
+      margin-bottom: 15px;
+
+      animation: latido 1.2s infinite;
+
+    }
+
+    h1 {
+
+      font-size: clamp(25px, 6vw, 34px);
+
+      margin-bottom: 18px;
+
+      line-height: 1.25;
+
+    }
+
+    p {
+
+      font-size: 17px;
+
+      line-height: 1.7;
+
+      margin-bottom: 22px;
+
+    }
+
+    .buttons {
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      flex-wrap: wrap;
+
+      gap: 14px;
+
+      margin-top: 25px;
+
+    }
+
+    button {
+
+      border: none;
+
+      padding: 14px 27px;
+
+      border-radius: 50px;
+
+      font-size: 17px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: transform 0.2s, box-shadow 0.2s;
+
+      touch-action: manipulation;
+
+    }
+
+    button:hover {
+
+      transform: translateY(-3px);
+
+      box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+
+    }
+
+    button:focus-visible {
+
+      outline: 3px solid #702743;
+
+      outline-offset: 4px;
+
+    }
+
+    .yes {
+
+      background: #ff4f87;
+
+      color: white;
+
+    }
+
+    .no {
+
+      background: #eeeeee;
+
+      color: #555;
+
+    }
+
+    .final {
+
+      background: linear-gradient(135deg, #fff0f6, #ffffff);
+
+    }
+
+    .final .heart {
+
+      font-size: 85px;
+
+    }
+
+    .small {
+
+      font-size: 14px;
+
+      color: #9c647a;
+
+      margin-top: 25px;
+
+      margin-bottom: 0;
+
+    }
+
+    #hearts {
+
+      position: fixed;
+
+      inset: 0;
+
+      overflow: hidden;
+
+      pointer-events: none;
+
+      z-index: 1;
+
+    }
+
+    .floating-heart {
+
+      position: absolute;
+
+      bottom: -50px;
+
+      animation: flotar linear forwards;
+
+      opacity: 0.85;
+
+    }
+
+    @keyframes latido {
+
+      0%, 100% { transform: scale(1); }
+
+      50% { transform: scale(1.13); }
+
+    }
+
+    @keyframes aparecer {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(15px) scale(0.97);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+      }
+
+    }
+
+    @keyframes flotar {
+
+      from {
+
+        transform: translateY(0) rotate(0deg);
+
+        opacity: 0.9;
+
+      }
+
+      to {
+
+        transform: translateY(-115vh) rotate(360deg);
+
+        opacity: 0;
+
+      }
+
+    }
+
+    @media (max-width: 380px) {
+
+      .card {
+
+        padding: 30px 18px;
+
+      }
+
+      button {
+
+        padding: 13px 22px;
+
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *, *::before, *::after {
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div id="hearts" aria-hidden="true"></div>
+
+  <main class="card" id="card" aria-live="polite">
+
+    <div class="heart">💗</div>
+
+    <h1 id="title">Tengo una pregunta para ti...</h1>
+
+    <p id="message">
+
+      Hay algo que llevo queriendo preguntarte desde hace tiempo.
+
+      Eres una persona muy especial para mí y quiero compartir
+
+      muchos momentos bonitos contigo. ❤️
+
+    </p>
+
+    <p id="question">
+
+      ¿Quieres ser mi novia? 🥹💕
+
+    </p>
+
+    <div class="buttons" id="buttons">
+
+      <button class="yes" onclick="decirSi()">
+
+        ¡Sí, quiero! 💖
+
+      </button>
+
+      <button class="no" onclick="decirNo()">
+
+        No 🙈
+
+      </button>
+
+    </div>
+
+    <p class="small" id="footer">
+
+      He preparado esto especialmente para ti. ❤️
+
+    </p>
+
+  </main>
+
+  <script>
+
+    let intentos = 0;
+
+    const mensajes = [
+
+      {
+
+        titulo: "¿Segura? 🥺",
+
+        mensaje: "Piénsalo otra vez, bonita. Imagínate todas las cosas lindas que podríamos vivir juntos. 💗",
+
+        pregunta: "¿No quieres darme una oportunidad? 🥹"
+
+      },
+
+      {
+
+        titulo: "¿De verdad dices que no? 😭",
+
+        mensaje: "Yo aquí, con todo mi corazón preparado para ti...",
+
+        pregunta: "¿Ni siquiera un poquito de sí? 🥺💕"
+
+      },
+
+      {
+
+        titulo: "¿Aún dices que no? 👀",
+
+        mensaje: "Bueno, tengo que intentarlo una vez más porque de verdad me gustas muchísimo. ❤️",
+
+        pregunta: "¿Y si te prometo muchos abrazos? 🤗"
+
+      },
+
+      {
+
+        titulo: "Piénsalo, mi niña 💗",
+
+        mensaje: "No sabes la sonrisa que me imagino cuando pienso en nosotros juntos.",
+
+        pregunta: "¿Me dejas hacerte feliz? 🥹"
+
+      },
+
+      {
+
+        titulo: "Última oportunidad... por ahora 😂",
+
+        mensaje: "Mi corazón dice que tenemos una bonita historia por escribir.",
+
+        pregunta: "¿Quieres escribirla conmigo? 💌"
+
+      },
+
+      {
+
+        titulo: "¿Todavía no? 🥹",
+
+        mensaje: "No me rindo con esta preguntita romántica. ¡Tengo una última idea!",
+
+        pregunta: "¿Y si empezamos nuestra historia con un sí? 💞"
+
+      },
+
+      {
+
+        titulo: "Mi corazón sigue preguntando ❤️",
+
+        mensaje: "Cada vez que vuelvas a pulsar que no, te recordaré lo especial que eres para mí.",
+
+        pregunta: "¿Quieres ser mi novia? Te lo pregunto otra vez. 💖"
+
+      }
+
+    ];
+
+    function decirNo() {
+
+      intentos++;
+
+      const indice = Math.min(intentos - 1, mensajes.length - 1);
+
+      const m = mensajes[indice];
+
+      document.getElementById("title").textContent = m.titulo;
+
+      document.getElementById("message").textContent = m.mensaje;
+
+      document.getElementById("question").textContent = m.pregunta;
+
+      document.getElementById("footer").textContent =
+
+        "Pregunta número " + (intentos + 1) + " de mi corazón. ❤️";
+
+      const botonNo = document.querySelector(".no");
+
+      if (intentos >= 3) {
+
+        botonNo.textContent = "Todavía no 🙈";
+
+      }
+
+      if (intentos >= 6) {
+
+        botonNo.textContent = "¿Y si lo pienso? 😂";
+
+      }
+
+      if (intentos >= 10) {
+
+        botonNo.textContent = "Sigo pensando 🙈";
+
+      }
+
+      const card = document.getElementById("card");
+
+      card.style.animation = "none";
+
+      void card.offsetWidth;
+
+      card.style.animation = "aparecer 0.5s ease";
+
+    }
+
+    function decirSi() {
+
+      document.getElementById("card").classList.add("final");
+
+      document.getElementById("title").textContent =
+
+        "¡SABÍA QUE DIRÍAS QUE SÍ! 💖";
+
+      document.getElementById("message").textContent =
+
+        "No sabes lo feliz que me hace este momento. Quiero crear recuerdos bonitos contigo, hacerte sonreír y demostrarte cada día lo mucho que significas para mí.";
+
+      document.getElementById("question").textContent =
+
+        "Ahora sí... oficialmente, ¿mi novia? 🥹❤️";
+
+      document.getElementById("buttons").innerHTML = `
+
+        <button class="yes" onclick="celebrar()">
+
+          ¡SÍ, MI AMOR! 💘
+
+        </button>
+
+      `;
+
+      document.getElementById("footer").textContent =
+
+        "Te amo muchísimo. ❤️";
+
+      document.querySelector(".heart").textContent = "💞";
+
+      document.body.style.background =
+
+        "linear-gradient(135deg, #ff8fb3, #ffc2d8, #ffe4ef)";
+
+      lanzarCorazones();
+
+    }
+
+    function celebrar() {
+
+      document.getElementById("title").textContent =
+
+        "¡EL COMIENZO DE NUESTRA HISTORIA! 💍";
+
+      document.getElementById("message").textContent =
+
+        "Sabía que dirías que sí, pero quería hacer algo especial para preguntártelo. Gracias por formar parte de mi vida. Quiero compartir contigo muchos momentos, risas, abrazos y recuerdos inolvidables.";
+
+      document.getElementById("question").textContent =
+
+        "Te amo, mi niña. ❤️ Siempre recordaré este momento. 💖";
+
+      document.getElementById("buttons").innerHTML = `
+
+        <button class="yes" onclick="lanzarCorazones()">
+
+          ¡Más corazones! 💗
+
+        </button>
+
+      `;
+
+      lanzarCorazones();
+
+    }
+
+    function lanzarCorazones() {
+
+      const contenedor = document.getElementById("hearts");
+
+      const simbolos = ["❤️", "💖", "💕", "💗", "💘", "💞"];
+
+      for (let i = 0; i < 35; i++) {
+
+        const corazon = document.createElement("span");
+
+        corazon.className = "floating-heart";
+
+        corazon.textContent =
+
+          simbolos[Math.floor(Math.random() * simbolos.length)];
+
+        corazon.style.left = Math.random() * 100 + "vw";
+
+        corazon.style.fontSize = (18 + Math.random() * 25) + "px";
+
+        corazon.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+        corazon.style.animationDelay = (Math.random() * 2) + "s";
+
+        contenedor.appendChild(corazon);
+
+        corazon.addEventListener("animationend", () => {
+
+          corazon.remove();
+
+        });
+
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>
